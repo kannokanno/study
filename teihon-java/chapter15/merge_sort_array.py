@@ -5,7 +5,7 @@ def sort(buf):
     n = len(buf)
     if n < 2:
         return buf
-    mid = n/2
+    mid = n / 2
     a = sort(buf[0:mid])
     b = sort(buf[mid:n])
     print "a:", a, "b:", b
