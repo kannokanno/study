@@ -2,8 +2,8 @@
 import unittest
 
 def sort(buf):
-    # ビンのサイズは100で固定とする
-    bin_size = 100
+    # ビンのサイズは10で固定とする
+    bin_size = 10
     bin = [None] * bin_size
     for i in range(len(buf)):
         x = buf[i]
