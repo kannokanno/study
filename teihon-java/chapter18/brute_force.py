@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import timeit
 import unittest
 
 def search(text, pattern):
