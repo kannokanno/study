@@ -21,8 +21,7 @@ class Test(unittest.TestCase):
         self.assertEquals(sort([1]), [1])
         self.assertEquals(sort([1, 2]), [1, 2])
         self.assertEquals(sort([2, 1]), [1, 2])
-        self.assertEquals(sort([3, 3, 3, 6, 1, 2, 5, 5, 7, 4]), [1, 2, 3, 3, 3, 4, 5, 5, 6, 7])
+        self.assertEquals(sort([3, 3, 6, 1, 3, 2, 5, 7, 5, 4]), [1, 2, 3, 3, 3, 4, 5, 5, 6, 7])
 
 if __name__ == '__main__':
     unittest.main()
-
