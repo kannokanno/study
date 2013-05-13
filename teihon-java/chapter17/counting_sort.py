@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import unittest
 
+# 書籍とは違う実装になった。
+# 分布図を使っていないんだけど、ロジック勘違いしている？
 def sort(buf):
     # ビンのサイズは10で固定とする
     bin_size = 10
