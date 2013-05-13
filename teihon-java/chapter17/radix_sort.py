@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-# http://www.geocities.jp/m_hiroi/light/pyalgo07.html から引用
+# http://www.geocities.jp/m_hiroi/light/pyalgo07.html を参考に一部修正
 def sort(buf):
     size = len(buf)
     work = [0] * size
