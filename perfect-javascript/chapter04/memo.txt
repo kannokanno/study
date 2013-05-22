@@ -1,0 +1,31 @@
+// for in の場合はkey
+js> var obj = {x:1, y:2, z:3};
+js> for (var k in obj) { print(k); }
+x
+y
+z
+
+// for each in の場合はvalue
+// ただしこれはECMA5版にはなくてJS独自拡張
+js> for each (var k in obj) { print(k); }
+1
+2
+3
+
+
+// throw には任意の式を書ける
+js> throw 1;
+!!!uncaught exception: 1!!!
+js> throw 1 == 2;
+!!!uncaught exception: false!!!
+js> throw "hoge error";
+!!!uncaught exception: hoge error!!!
+
+
+// ECMA5版のstrictモードではwith文を禁止している
+
+
+// void演算子は何を渡しても結果がundefiendになる
+// aタグのhrefにjsを書く際などのイディオムとして使われることアリ
+js> print(void 1);
+undefined
