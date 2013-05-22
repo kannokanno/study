@@ -1,0 +1,31 @@
+// var x = x || y という代入式は、xがtrueになる値の場合にはx、そうでなければyを使う
+// なのでこれはx == 1 == trueになるので1が入るが、
+js> var a = 1;
+js> var b = a || 2;
+js> b
+1
+// なのでこれはx == 0 == falseになるので2が入る
+// 「aが定義されているかどうか」ではないので注意
+js> var a = 0;
+js> a
+0
+js> var b = a || 2;
+js> b
+2
+
+
+// トップレベルの変数/関数定義は、グローバルオブジェクトのプロパティ定義のこと
+js> var x = 'hoge';
+js> this.x // トップレベルのthis = グローバルオブジェクト
+"hoge"
+
+// 関数内で宣言される変数はローカル変数
+// ローカル変数(引数含む)は暗黙的に生成されるCallオブジェクトのプロパティ
+// Callオブジェクト = 関数の呼ばれ方によって異なる(メソッド呼び出し/apply・callとか)
+
+// 宣言していない変数アクセスはエラーだが、
+// 存在しないプロパティアクセスはundefinedになるだけ
+js> print(hoge)
+!!!typein:25: ReferenceError: hoge is not defined!!!
+js> print(this.hoge)
+undefined
