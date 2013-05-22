@@ -1,0 +1,106 @@
+// ---- 文字列 ----
+js> var sobj1 = new String('abc');
+js> var sobj2 = new String('abc');
+
+// 文字列オブジェクト同士は値が同じでもNG
+js> sobj1 == sobj2;
+false
+js> sobj1 === sobj2;
+false
+
+// 文字列リテラルに型変換されるようにするとOK
+js> sobj1 == 'abc';
+true
+js> 'abc' == sobj1
+true
+
+// 文字列リテラルと文字列オブジェクトは型が異なる
+js> typeof 'abc';
+"string"
+js> typeof sobj1;
+"object"
+
+// String()は文字列リテラルに型変換する。new String()はコンストラクタ
+js> var s = String(47);
+js> typeof s;
+"string"
+js> var so = new String(47);
+js> typeof so;
+"object"
+js> print(s);
+47
+js> print(so);
+47
+
+
+// ---- 数値 ----
+// NaN同士の比較は常にfalse(判定にはisNaNを使う)
+js> NaN == NaN;
+false
+js> NaN === NaN;
+false
+js> isNaN(NaN);
+true
+
+// 演算中に1つでもNaNがあると結果はNaNになる
+js> 1 + 2 + NaN;
+NaN
+
+
+// ---- null / undefined ----
+// nullはobjectなので型からは判別できない
+js> typeof null;
+"object"
+js> null === null;
+true
+js> null == null;
+true
+
+// null と undefined は型変換ありで比較するとtrue
+js> null == undefined;
+true
+
+
+// ---- 四則演算の型変換 ----
+// +は必ず文字列型に変換される
+js> 1 + '100';
+"1100"
+// +以外は数値型に変換される
+js> 1 - '100';
+-99
+
+// ---- 型変換の最短表記 ----
+// ネットワーク転送量を削減するために有効
+js> var n = 3;
+js> n+'';
+"3"
+js> var s = '3';
+js> +s;
+3
+
+
+// ---- Booleanへの型変換 ----
+// Boolean()を使わず!!を使うのも定着している
+// !演算子がBooleanへの暗黙の型変換を行う。
+// このままでは反転(否定)になっているのでもう一度!演算子を使って意味を戻す。
+// 結果的にはBooleanへの型変換だけが適用される
+js> Boolean('b');
+true
+js> !!'b';
+true
+js> Boolean(0);
+false
+js> !!0;
+false
+
+// オブジェクト型をBooleanへ型変換すると必ずtrue
+js> Boolean({});
+true
+js> Boolean(new Number(0));
+true
+js> if(new String('')) { print('T'); } else { print('F'); }
+T
+js> if(new Number(0)) { print('T'); } else { print('F'); }
+T
+js> if(new Boolean(false)) { print('T'); } else { print('F'); }
+T
