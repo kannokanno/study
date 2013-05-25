@@ -1,0 +1,54 @@
+DOMについて
+
+* IDの重複について
+IDが重複していた場合のgetElementByIdの挙動は多くのブラウザにおいて
+「最初に見つかったタグを返す」が、規定はされていない。
+
+* ライブオブジェクト
+getElementsByTagNameで取得できるNodeList。
+(IE8以前の場合はHTMLCollection)
+常にDOMオブジェクトへの参照を持っているため、要素の状態の変更を追跡できる。
+たとえばnode.lengthが返す値は動的に変わる。これによりfor文で無限ループになる可能性もある。
+
+* ライブオブジェクトのパフォーマンスとArrayへの変換
+Array.prototype.slice.call(nodelist)を適用すると戻り値が配列になる。
+パフォーマンス上これは望ましいことになるが、IE8以前(HTMLCollection)では失敗する。
+通常はライブラリが隠蔽してくれているものが多いので意識することはないらしい。
+
+* getElementsByTagClassName
+複数指定(and条件)の場合は空白区切りの文字列を渡す。'hoge piyo'のように。
+ただしこれはDOMLevel0の仕様ではなくてHTML5の仕様なので、モダンブラウザでしか機能しない。
+ライブラリを使っているならエミュレートしてくれているはずなので気にせず使えるはず。
+
+* 空白ノード
+空白や改行はテキストノードとして扱われる。
+<div>
+  <span></span>
+</div>
+このようなDOMの場合、divのfirstChild()はspanではなく空白ノードである。
+これを回避するには「空白ノードを除去する」API経由で取得する。
+firstElementChildなどがそれにあたる。
+childrenに関しては、IEだけは空白ノードを含めるらしい。
+
+* XPath
+IEでは使用できない…!
+
+* Selectors API
+document.querySelector('#foo')
+document.querySelectorAll('div')
+document.querySelector('#foo > p.content:nth-of-type(4) > a[name="hoge"]')
+取得されるオブジェクトはNodeListではなくStaticNodeListになるので注意。
+NodeListと違い、オブジェクトに変更を加えてもHTMLには反映されない。
+
+* HTML変更
+A. createElement/appendChildにノードを渡す
+B. innerHTMLで直接HTML文字列を指定する
+   DOM仕様じゃなくてHTML5仕様だけど、IEでも古くから実装されていたので動く。
+C. テキストだけ設定する場合はtextContentが使える。IEではinnerTextプロパティ
+   タグ部分は削除される(テキストノードになる)
+
+* DOM操作パフォーマンス
+getElementById()で取得したオブジェクトに都度appendChildをすると常に再描画が走るので、
+無駄が多くなる。
+document.createDocumentFragment()で取得したオブジェクトに要素を追加しておき、
+最後に1度だけgetElementById().appendChild(fragment)してあげれば1度の再描画で済む。
