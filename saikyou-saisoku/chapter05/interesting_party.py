@@ -7,18 +7,16 @@ def solve(first, second):
         return 0
     elif num == 1 and first[0] == '':
         return 0
-    return s2(num, first, second)
+    return s1(num, first, second)
 
 def s1(num, first, second):
     talks = {}
     for i in xrange(num):
         talks[first[i]] = 0
         talks[second[i]] = 0
-    for k, v in talks.items():
-        for i in xrange(num):
-            if first[i] == k or second[i] == k:
-                v += 1
-        talks[k] = v
+    for i in xrange(num):
+        talks[first[i]] = talks[first[i]] + 1
+        talks[second[i]] = talks[second[i]] + 1
     return max(talks.values())
 
 def s2(num, first, second):
