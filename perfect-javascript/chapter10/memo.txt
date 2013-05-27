@@ -1,0 +1,51 @@
+イベントモデルはDOMLevel2で定義されている
+IE8は独自イベントモデル
+
+イベントハンドラ
+  1イベント1つのみ
+  方法
+    HTML要素の属性に指定
+      <a href="" onclick="alert(1);"></a>
+      return false;するとデフォルト動作をキャンセルする。
+      aタグの場合はページ遷移しなくなり、フォームの場合は送信されなくなるなど
+    DOM要素のプロパティに指定する
+      var btn = document.getElementById('foo')
+      btn.onclick = hogeFunc
+      ハンドラに設定できるのは関数オブジェクトのみ。文字列などはNG
+      HTMLタグに記述されていたハンドラは上書きされる
+
+イベントリスナ
+  1イベントに複数登録できる
+  thisはイベントリスナを設定した要素自身
+    document.getElementById('foo').onclick = function(){/* thisはfoo要素 */}
+    要素以外をthisとして扱いたい場合のハックとして、無名関数でラップする方法がある
+      document.getElementById('foo').onclick = obj.handleClick(event) // thisはfoo要素
+      document.getElementById('foo').onclick = function(event){
+        obj.handleClick(event); // obj.handleClick内でのthisはobj
+      }
+  キャプチャリングフェーズかバブリングフェーズどちらで実行するかを第3引数で指定できる
+
+イベントの伝播(フェーズ)
+  キャプチャリングフェーズ
+    WindowオブジェクトからイベントターゲットまでDOMツリーを辿って伝搬する
+  ターゲットフェーズ
+    イベントターゲットに登録されているイベントリスナの実行
+    イベントハンドラの実行もここ
+  バブリングフェーズ
+    イベントターゲットからWindowオブジェクトまでDOMツリーを辿って伝搬する
+    イベントによってはバブリングしないものもある(focusイベントなど)
+  キャンセル
+    stopPropagation()
+      以降の伝搬をキャンセルする。ターゲットの残りのリスナは実行される
+    stopImmediatePropagation()
+      ターゲットの残りのリスナを中止し、以降の伝搬もキャンセルする
+    preventDefault()
+      ブラウザ標準の処理をキャンセルする
+      イベントハンドラのreturn false;と同様
+      キャンセルできないイベントもある(blurイベントなど)
+
+独自イベント
+  1. eventをcreateEventで作成
+  2. 要素targetのaddEventListenerに登録
+  3. target.dispatchEvent(event)で発火する
+     dispatchEventは即時実行される
