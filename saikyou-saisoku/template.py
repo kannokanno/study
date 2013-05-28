@@ -6,7 +6,6 @@ def solve():
 
 class Test(unittest.TestCase):
     def test(self):
-        # 通常のケース
         self.assertEqual(
                 solve(),
                 None)
