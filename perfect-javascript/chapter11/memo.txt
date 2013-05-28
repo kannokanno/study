@@ -1,0 +1,49 @@
+style書き換え
+  var foo = document.getElementById('aa');
+  foo.onclick = function toggleStyle() {
+    var style = this.style;
+    style.backgroundColor = 'red';
+  };
+  styleのプロパティ名は -区切り -> キャメルケースにした形。
+  ただしfloatなど予約後とバッティングするやつはcssFloatみたいに別名になっている
+
+XMLHttpRequest
+  イベント
+    xhr.onreadystatechange = function(){
+      xhr.readyStateでフェーズを判断
+    };
+
+  タイムアウト
+    非同期なので設定しなくてもユーザー側は影響ないが、
+    無駄にコネクション数を増やしたり非効率なので設定すべし
+
+クロスオリジン
+  JavaScriptがアクセスできるのは同一オリジン(XHRだけの話じゃなかったんだ)
+  クロスオリジン通信を行うためのハック
+    JSONP
+      src読み込みは外部ドメインでも問題ないことを利用する
+      srcで外部ドメインからjsを読み込む
+      読み込みリクエストのパラメータにコールバック関数名を指定する
+      サーバー側は指定されたコールバック関数を呼ぶようにする
+      読み込みを利用しているだけなのでPOSTは使えない
+      サーバー側が悪意あるとあぼん
+
+    iframe
+      複雑(詳細は本で)
+      ただしIEでも問題なく動くこと、自ドメイン経由なので安全であることがメリット
+
+    window.postMessage
+      HTML5
+
+    XHR Level2
+      クライアントはxhr.withCredentialsをtrueにして送信する
+      サーバーはAccess-Control-Allow-Originヘッダをレスポンスにつける
+
+フォーム
+  document.formsでフォームにアクセスできるが、これは記述順序に影響するのでよくない
+  name属性をプロパティとして扱えるのでそっちがいい
+    document.fooForm.barText.value
+
+  submit()ではsubmitイベントが発火されない
+
+  form.targetを高さ/幅0のiframeにすることでページ遷移させないことが可能。ハック
