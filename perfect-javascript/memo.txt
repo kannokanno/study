@@ -1,0 +1,71 @@
+jQuery
+
+$()の使い方補足
+  DOM要素を渡せばjQueryオブジェクトに変換される
+  関数を渡すとdocument.readyで実行される
+
+イベントリスナ登録
+  bind() -> 実行時点で存在していた要素にのみイベント登録できる
+  live() -> 実行後に追加した要素でもイベント登録できる
+    内部的にはdocumentのイベントリスナになっていて、バブリング時に制御するらしい
+      なので純粋にbind()で実行するよりも遅いかな？
+  delegate() -> live()と似ているが、document以外のオブジェクトを指定できる
+    live()よりもパフォーマンスが優れている
+  one() -> bind()の特殊系。1度だけ実行される
+
+プラグインは$.fnを拡張することで作れる
+  プロパティに追加している
+  プラガブルなライブラリを見てきたから何となくイメージが沸くようになった
+
+グローバルスコープ
+  jQueryと$の2つのオブジェクトを生成する
+  noConflict()を呼ぶとwindow.$の方は削除される
+    noConflict(true)にするとjQueryオブジェクトも消える
+      なので返り値を新しいグローバル変数に保存して使う
+
+やっぱライブラリ使うのにCDNはありかな
+
+Ajax
+  ajax()を呼ぶといくつかのグローバルイベントが発火する。
+    抑制したい場合はglobal:falseで実行する
+
+  Deferred
+    非同期処理を直列化するための仕組み
+      これを使わないとコールバックをネストするなどしないと直列を実現できない
+    $.Deferred.promise()
+    unresolved,resoloved,rejectedのいずれかの状態を持つ
+      resolovedかrejectedになった時点で後続の処理が実行される
+      内部的にはコールバック関数を保持して制御しているだけ
+      状態が遷移するのは1度だけ
+
+  Promise
+    Deferredオブジェクトが返すオブジェクト
+    Deferredからいくつかのメソッドを削除したオブジェクト
+    Deferredをそのまま返すと受け取り側で勝手に状態を変えられるので、それを防ぐため
+
+  後続関数
+    done(function)
+      resolovedになった時の処理
+      複数のDeferredオブジェクトを扱っている場合、すべてresolovedじゃないとNG
+    fail(function)
+      rejectedになった時の処理
+    then(done_function, fail_function)
+      resolovedになった時の処理とrejectedになった時の処理
+    always(function)
+      常に走る処理
+    pipe(done_function, fail_function)
+      resolovedになった時の処理とrejectedになった時の処理
+      Deferredオブジェクトをチェーンできる
+        foo().done(bar).done(baz)
+          barやbazが実行可能になるのはfoo()が実行された段階なので、barやbazの内部実装次第では順序が入れ替わる
+        foo().pipe(bar).pipe(baz)
+          期待通りfoo->bar->bazで必ず実行される
+        後続関数がnullを返す場合は直前のDeferredが返る
+
+    when(deferred...)
+      複数のDeferredオブジェクトを処理
+      すべての非同期処理が完了するまで後続処理を遅延できる
+
+    複数回実行可能
+      すでにその状態になっている時に再度呼びだすと即時実行
+
