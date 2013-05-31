@@ -240,3 +240,58 @@ heap_sort.py
 * サクッと書けない
 * 概念や実装面でまだ細かいところが分かっていない
 
+## 数え上げソート
+
+### 時間計算量
+
+最良 | 平均 | 最悪
+------------------
+O(n) | O(n) | O(n)
+
+### 空間計算量
+
+* O(k)
+    * 数え上げ用の配列サイズkによる
+
+### 計測
+
+counting_sort.py
+
+    ## benchmarker:       release 3.0.1 (for python)
+    ## python platform:   darwin [GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
+    ## python version:    2.7.1
+    ## python executable: /Users/kanno/.virtualenvs/work/bin/python
+
+    ##                                      user       sys     total      real
+    random:size=1000                      0.0000    0.0000    0.0000    0.0010
+    random:size=10000                     0.0100    0.0000    0.0100    0.0104
+    random:size=100000                    0.1200    0.0000    0.1200    0.1231
+    already sort of 90%:size=1000         0.0000    0.0000    0.0000    0.0010
+    already sort of 90%:size=10000        0.0100    0.0000    0.0100    0.0105
+    already sort of 90%:size=100000       0.1000    0.0000    0.1000    0.1040
+
+    ## Ranking                              real
+    already sort of 90%:size=1000         0.0010 (100.0%) *************************
+    random:size=1000                      0.0010 ( 99.1%) *************************
+    random:size=10000                     0.0104 (  9.9%) **
+    already sort of 90%:size=10000        0.0105 (  9.8%) **
+    already sort of 90%:size=100000       0.1040 (  1.0%)
+    random:size=100000                    0.1231 (  0.8%)
+
+    ## Ratio Matrix                         real     [01]     [02]     [03]     [04]     [05]     [06]
+    [01] already sort of 90%:size=1000    0.0010   100.0%   100.9%  1007.4%  1018.4% 10065.8% 11914.0%
+    [02] random:size=1000                 0.0010    99.1%   100.0%   998.6%  1009.6%  9978.2% 11810.5%
+    [03] random:size=10000                0.0104     9.9%    10.0%   100.0%   101.1%   999.2%  1182.7%
+    [04] already sort of 90%:size=10000   0.0105     9.8%     9.9%    98.9%   100.0%   988.4%  1169.8%
+    [05] already sort of 90%:size=100000   0.1040     1.0%     1.0%    10.0%    10.1%   100.0%   118.4%
+    [06] random:size=100000               0.1231     0.8%     0.8%     8.5%     8.5%    84.5%   100.0%
+
+### 特徴
+
+* 特定条件でしか使えないが、O(n)と最速の部類
+* 数え上げ用の配列の大きさと相談
+* 実装も楽
+
+### 感想
+
+* 速すぎる
