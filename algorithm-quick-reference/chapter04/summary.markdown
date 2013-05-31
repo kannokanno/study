@@ -70,11 +70,11 @@ insert_sort.py
 
 ### 計測
 
-quick_sort.py
-
 * 再帰版
 * pivot(軸)は常にrightにする
     * つまり、ほとんどが整列ずみの場合には著しく計算量が増す
+
+quick_sort.py
 
     ## benchmarker:       release 3.0.1 (for python)
     ## python platform:   darwin [GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
