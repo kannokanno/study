@@ -43,12 +43,3 @@ if __name__ == '__main__':
             search(data, middle)
         with bm('data=range(100万), key=not_found'):
             search(data, -1)
-
-        data = range(100000000)
-        middle = 100000000 / 2
-        with bm('data=range(1億), key=first'):
-            search(data, 0)
-        with bm('data=range(1億), key=middle'):
-            search(data, middle)
-        with bm('data=range(1億), key=not_found'):
-            search(data, -1)

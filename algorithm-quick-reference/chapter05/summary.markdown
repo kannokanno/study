@@ -8,7 +8,7 @@
 
 ### 計測
 
-liner_search_benchmark.py
+* liner_search_benchmark.py
 
     ## benchmarker:       release 3.0.1 (for python)
     ## python platform:   darwin [GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]
@@ -28,14 +28,8 @@ liner_search_benchmark.py
     data=range(100万), key=first         0.0000    0.0000    0.0000    0.0000
     data=range(100万), key=middle        0.0600    0.0000    0.0600    0.0640
     data=range(100万), key=not_found     0.1400    0.0000    0.1400    0.1339
-    data=range(1億), key=first           0.0000    0.0100    0.0100    0.0078
-    data=range(1億), key=middle          6.7600    0.4900    7.2500    8.5581
-    data=range(1億), key=not_found      13.8100    1.5400   15.3500   22.3503
-    data=文字列100万件, key=first    0.0000    0.0000    0.0000    0.0000
-    data=文字列100万件, key=middle   0.0700    0.0000    0.0700    0.0652
-    data=文字列100万件, key=not...   0.1300    0.0000    0.1300    0.1303
 
-liner_search_mem_profile.py
+* liner_search_mem_profile.py
 
     100万件:最悪時
     Partition of a set of 25366 objects. Total size = 3236792 bytes.
@@ -74,7 +68,7 @@ liner_search_mem_profile.py
 
 ### 計測
 
-binary_search_benchmark.py
+* binary_search_benchmark.py
 
     ##                                      user       sys     total      real
     data=range(1000), key=first           0.0000    0.0000    0.0000    0.0000
@@ -89,11 +83,8 @@ binary_search_benchmark.py
     data=range(100万), key=first         0.0000    0.0000    0.0000    0.0000
     data=range(100万), key=middle        0.0000    0.0000    0.0000    0.0000
     data=range(100万), key=not_found     0.0000    0.0000    0.0000    0.0000
-    data=range(1億), key=first           0.0000    0.0100    0.0100    0.0274
-    data=range(1億), key=middle          0.0000    0.0000    0.0000    0.0003
-    data=range(1億), key=not_found       0.0000    0.0000    0.0000    0.0032
 
-binary_search_mem_profile.py
+* binary_search_mem_profile.py
 
     100万件:最悪時
     Partition of a set of 25369 objects. Total size = 3237104 bytes.
@@ -122,3 +113,143 @@ binary_search_mem_profile.py
 
 * ちゃんと計測できているのかこれ
     * 特性上、早いのは分かるんだけど、数字上は一瞬じゃないか...
+
+## ハッシュ法(チェインハッシュ)
+
+### 時間計算量
+
+| 最良 | 平均   | 最悪   |
+|------|--------|--------|
+| O(1) | O(1) | O(n) |
+
+### 計測
+
+* chain_hash_search_benchmark.py
+
+    * テーブルサイズ = n/3
+
+    ##                                      user       sys     total      real
+    data=range(1000), key=first           0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=middle          0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=not_found       0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=middle        0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=not_found     0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=first        0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=middle       0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=not_found    0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=middle        0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=not_found     0.0000    0.0000    0.0000    0.0000
+
+    * テーブルサイズ = n/100
+
+    ##                                      user       sys     total      real
+    data=range(1000), key=first           0.0000    0.0000    0.0000    0.0001
+    data=range(1000), key=middle          0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=not_found       0.0000    0.0000    0.0000    0.0001
+    data=range(10,000), key=first         0.0000    0.0000    0.0000    0.0002
+    data=range(10,000), key=middle        0.0000    0.0000    0.0000    0.0001
+    data=range(10,000), key=not_found     0.0000    0.0000    0.0000    0.0002
+    data=range(100,000), key=first        0.0000    0.0000    0.0000    0.0005
+    data=range(100,000), key=middle       0.0000    0.0000    0.0000    0.0003
+    data=range(100,000), key=not_found    0.0000    0.0000    0.0000    0.0005
+    data=range(100万), key=first         0.0000    0.0000    0.0000    0.0006
+    data=range(100万), key=middle        0.0000    0.0000    0.0000    0.0003
+    data=range(100万), key=not_found     0.0000    0.0000    0.0000    0.0006
+
+* chain_hash_search_mem_profile.py
+
+    * テーブルサイズ = n/100
+
+    100万件:最悪時
+    Partition of a set of 4025301 objects. Total size = 427322576 bytes.
+     Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+         0 1000000  25 280000000  66 280000000  66 dict of chain_hash.Cell
+         1 1000000  25 72000000  17 352000000  82 chain_hash.Cell
+         2 1010984  25 48929128  11 400929128  94 str
+         3 1000548  25 24013152   6 424942280  99 int
+         4   5805   0   468328   0 425410608 100 tuple
+         5    314   0   211568   0 425622176 100 dict (no owner)
+         6    199   0   210088   0 425832264 100 dict of type
+         7     65   0   206360   0 426038624 100 dict of module
+         8   1601   0   204928   0 426243552 100 types.CodeType
+         9   1564   0   187680   0 426431232 100 function
+    <95 more rows. Type e.g. '_.more' to view.>
+
+### 特徴
+
+* 入力データに整列条件はない
+* ハッシュテーブル構築のためのコストがある
+* ハッシュ関数の戦略に依存
+    * 最悪すべてのデータが同じハッシュ値になると、O(n)の探索になるし空き容量も無駄になる
+* しかし早い
+
+### 感想
+
+* 早いで
+* 計測に関しては、ハッシュ関数の衝突率とかも調べないとなんとも言えないな
+* 計測結果には表示されないけど、このサンプルコードだとハッシュ表構築にめっちゃ時間かかっている
+* セル(連結リスト)がめっちゃメモリ食っている
+* 上記計測だと最悪時が試せていないな(ハッシュ値がすべて同じ場合)
+
+## ハッシュ法(オープンアドレス)
+
+### 時間計算量
+
+| 最良 | 平均   | 最悪   |
+|------|--------|--------|
+| O(1) | O(1) | O(b) |
+
+※b = ハッシュテーブルのサイズ  
+  n個のデータを全て入れようと思えば最終的にnサイズ必要か？
+
+### 計測
+
+* oa_hash_search_benchmark.py
+
+    ##                                      user       sys     total      real
+    data=range(1000), key=first           0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=middle          0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=not_found       0.0000    0.0000    0.0000    0.0017
+    data=range(10,000), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=middle        0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=not_found     0.0100    0.0000    0.0100    0.0116
+    data=range(100,000), key=first        0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=middle       0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=not_found    0.1300    0.0000    0.1300    0.1276
+    data=range(100万), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=middle        0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=not_found     1.1800    0.0000    1.1800    1.1783
+
+* oa_hash_search_mem_profile.py
+
+    100万件:最悪時
+    Partition of a set of 3025298 objects. Total size = 155366832 bytes.
+     Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+         0 1005804  33 72468336  47  72468336  47 tuple
+         1 1010985  33 48929240  31 121397576  78 str
+         2 1000547  33 24013128  15 145410704  94 int
+         3    175   0  8151160   5 153561864  99 list
+         4    314   0   211568   0 153773432  99 dict (no owner)
+         5    199   0   210088   0 153983520  99 dict of type
+         6     65   0   206360   0 154189880  99 dict of module
+         7   1601   0   204928   0 154394808  99 types.CodeType
+         8   1564   0   187680   0 154582488  99 function
+         9    199   0   177008   0 154759496 100 type
+    <93 more rows. Type e.g. '_.more' to view.>
+
+### 特徴
+
+* 入力データに整列条件はない
+* ハッシュテーブル構築のためのコストがある
+* ハッシュ関数の戦略に依存
+* しかし早い
+
+### 感想
+
+* 早いで
+* 計測に関しては、ハッシュ関数の衝突率とかも調べないとなんとも言えないな
+* 計測結果には表示されないけど、このサンプルコードだとハッシュ表構築にめっちゃ時間かかっている
+* チェインハッシュよりメモリ使用量少ない。tuple使わなければもっと削減できそう
+* 最悪時でも100万程度ならそこまで悪く無いか？
