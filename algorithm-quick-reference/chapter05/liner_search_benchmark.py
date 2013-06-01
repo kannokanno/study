@@ -19,29 +19,38 @@ if __name__ == '__main__':
 
         data = range(10000)
         middle = len(data) / 2
-        with bm('data=range(10000), key=first'):
+        with bm('data=range(10,000), key=first'):
             search(data, 0)
-        with bm('data=range(10000), key=middle'):
+        with bm('data=range(10,000), key=middle'):
             search(data, middle)
-        with bm('data=range(10000), key=not_found'):
+        with bm('data=range(10,000), key=not_found'):
             search(data, -1)
 
         data = range(100000)
         middle = len(data) / 2
-        with bm('data=range(100000), key=first'):
+        with bm('data=range(100,000), key=first'):
             search(data, 0)
-        with bm('data=range(100000), key=middle'):
+        with bm('data=range(100,000), key=middle'):
             search(data, middle)
-        with bm('data=range(100000), key=not_found'):
+        with bm('data=range(100,000), key=not_found'):
             search(data, -1)
 
         data = range(1000000)
         middle = len(data) / 2
-        with bm('data=range(1000000), key=first'):
+        with bm('data=range(100万), key=first'):
             search(data, 0)
-        with bm('data=range(1000000), key=middle'):
+        with bm('data=range(100万), key=middle'):
             search(data, middle)
-        with bm('data=range(1000000), key=not_found'):
+        with bm('data=range(100万), key=not_found'):
+            search(data, -1)
+
+        data = range(100000000)
+        middle = 100000000 / 2
+        with bm('data=range(1億), key=first'):
+            search(data, 0)
+        with bm('data=range(1億), key=middle'):
+            search(data, middle)
+        with bm('data=range(1億), key=not_found'):
             search(data, -1)
 
         data = ['key']

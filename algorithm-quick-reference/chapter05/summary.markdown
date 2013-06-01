@@ -19,35 +19,21 @@ liner_search_benchmark.py
     data=range(1000), key=first           0.0000    0.0000    0.0000    0.0000
     data=range(1000), key=middle          0.0000    0.0000    0.0000    0.0001
     data=range(1000), key=not_found       0.0000    0.0000    0.0000    0.0002
-    data=range(10000), key=first          0.0000    0.0000    0.0000    0.0000
-    data=range(10000), key=middle         0.0000    0.0000    0.0000    0.0007
-    data=range(10000), key=not_found      0.0000    0.0000    0.0000    0.0014
-    data=range(100000), key=first         0.0000    0.0000    0.0000    0.0000
-    data=range(100000), key=middle        0.0000    0.0000    0.0000    0.0064
-    data=range(100000), key=not_found     0.0100    0.0000    0.0100    0.0133
-    data=range(1000000), key=first        0.0000    0.0000    0.0000    0.0000
-    data=range(1000000), key=middle       0.0600    0.0000    0.0600    0.0635
-    data=range(1000000), key=not_found    0.1400    0.0000    0.1400    0.1443
+    data=range(10,000), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=middle        0.0000    0.0000    0.0000    0.0007
+    data=range(10,000), key=not_found     0.0000    0.0000    0.0000    0.0018
+    data=range(100,000), key=first        0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=middle       0.0100    0.0000    0.0100    0.0069
+    data=range(100,000), key=not_found    0.0200    0.0000    0.0200    0.0159
+    data=range(100万), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=middle        0.0600    0.0000    0.0600    0.0640
+    data=range(100万), key=not_found     0.1400    0.0000    0.1400    0.1339
+    data=range(1億), key=first           0.0000    0.0100    0.0100    0.0078
+    data=range(1億), key=middle          6.7600    0.4900    7.2500    8.5581
+    data=range(1億), key=not_found      13.8100    1.5400   15.3500   22.3503
     data=文字列100万件, key=first    0.0000    0.0000    0.0000    0.0000
-    data=文字列100万件, key=middle   0.0700    0.0000    0.0700    0.0678
-    data=文字列100万件, key=not...   0.1400    0.0000    0.1400    0.1424
-
-    ## Ranking                              real
-    data=range(10000), key=first          0.0000 (100.0%) *************************
-    data=range(1000), key=first           0.0000 ( 73.9%) ******************
-    data=range(100000), key=first         0.0000 ( 57.6%) **************
-    data=range(1000000), key=first        0.0000 ( 47.9%) ************
-    data=文字列100万件, key=first    0.0000 ( 45.3%) ***********
-    data=range(1000), key=middle          0.0001 (  8.8%) **
-    data=range(1000), key=not_found       0.0002 (  5.2%) *
-    data=range(10000), key=middle         0.0007 (  1.1%)
-    data=range(10000), key=not_found      0.0014 (  0.6%)
-    data=range(100000), key=middle        0.0064 (  0.1%)
-    data=range(100000), key=not_found     0.0133 (  0.1%)
-    data=range(1000000), key=middle       0.0635 (  0.0%)
-    data=文字列100万件, key=middle   0.0678 (  0.0%)
-    data=文字列100万件, key=not_found   0.1424 (  0.0%)
-    data=range(1000000), key=not_found    0.1443 (  0.0%)
+    data=文字列100万件, key=middle   0.0700    0.0000    0.0700    0.0652
+    data=文字列100万件, key=not...   0.1300    0.0000    0.1300    0.1303
 
 liner_search_mem_profile.py
 
@@ -75,3 +61,4 @@ liner_search_mem_profile.py
 ### 感想
 
 * あれ、単なる数値/文字列検索程度なら100万件でも十分早い？
+* 億になるとアカン
