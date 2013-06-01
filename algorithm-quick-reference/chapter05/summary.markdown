@@ -55,6 +55,7 @@ liner_search_mem_profile.py
 ### 特徴
 
 * 実装が簡単
+* 入力データの整列状態に制限がない(整列されている必要がない)
 * 探索アルゴリズムの中では遅い部類
 * equalsの処理速度にも依存する
 
@@ -62,3 +63,62 @@ liner_search_mem_profile.py
 
 * あれ、単なる数値/文字列検索程度なら100万件でも十分早い？
 * 億になるとアカン
+
+## バイナリサーチ(二分探索)
+
+### 時間計算量
+
+| 最良 | 平均   | 最悪   |
+|------|--------|--------|
+| O(1) | O(log n) | O(log n) |
+
+### 計測
+
+binary_search_benchmark.py
+
+    ##                                      user       sys     total      real
+    data=range(1000), key=first           0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=middle          0.0000    0.0000    0.0000    0.0000
+    data=range(1000), key=not_found       0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=middle        0.0000    0.0000    0.0000    0.0000
+    data=range(10,000), key=not_found     0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=first        0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=middle       0.0000    0.0000    0.0000    0.0000
+    data=range(100,000), key=not_found    0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=first         0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=middle        0.0000    0.0000    0.0000    0.0000
+    data=range(100万), key=not_found     0.0000    0.0000    0.0000    0.0000
+    data=range(1億), key=first           0.0000    0.0100    0.0100    0.0274
+    data=range(1億), key=middle          0.0000    0.0000    0.0000    0.0003
+    data=range(1億), key=not_found       0.0000    0.0000    0.0000    0.0032
+
+binary_search_mem_profile.py
+
+    100万件:最悪時
+    Partition of a set of 25369 objects. Total size = 3237104 bytes.
+     Index  Count   %     Size   % Cumulative  % Kind (class / dict of class)
+         0  10963  43   927448  29    927448  29 str
+         1   5785  23   466744  14   1394192  43 tuple
+         2    314   1   211568   7   1605760  50 dict (no owner)
+         3    199   1   210088   6   1815848  56 dict of type
+         4     65   0   206360   6   2022208  62 dict of module
+         5   1595   6   204160   6   2226368  69 types.CodeType
+         6   1558   6   186960   6   2413328  75 function
+         7    199   1   177008   5   2590336  80 type
+         8    124   0   135328   4   2725664  84 dict of class
+         9   1044   4    83520   3   2809184  87 __builtin__.wrapper_descriptor
+    <91 more rows. Type e.g. '_.more' to view.>
+
+### 特徴
+
+* 入力データが整列されている必要がある
+    * 整列状態を維持するために、挿入や削除に負荷がかかる
+        * リストを使えば多少マシ。配列だときつい
+* メモリ内で収まらず二次記憶を使うようになると効率悪い
+* 二分木(平衡二分木)を使うのが良い
+
+### 感想
+
+* ちゃんと計測できているのかこれ
+    * 特性上、早いのは分かるんだけど、数字上は一瞬じゃないか...
