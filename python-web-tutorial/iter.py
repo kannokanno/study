@@ -3,8 +3,10 @@ class Reverse:
     def __init__(self, data):
         self.data = data
         self.index = len(data)
+
     def __iter__(self):
         return self
+
     def next(self):
         if self.index == 0:
             raise StopIteration
