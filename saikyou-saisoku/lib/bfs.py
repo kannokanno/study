@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def __logging(visited, rest=[]):
     print "visited:%s\n   rest:%s\n" % (visited, rest)
 
@@ -14,6 +15,8 @@ def bfs(graph, start, end):
         if label not in visited:
             visited.append(label)
             queue += graph.get(label, [])
+            #こっちでもいい
+            #queue += [x for x in graph.get(label, []) if x not in visited]
         __logging(visited, queue)
     return visited
 
