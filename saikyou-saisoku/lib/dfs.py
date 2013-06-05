@@ -4,6 +4,7 @@ def __logging(visited, rest=[]):
     else:
         print "visited:%s" % (visited)
 
+
 def dfs(graph, start, end):
     stack = [start]
     visited = []
@@ -21,6 +22,8 @@ def dfs(graph, start, end):
 
 
 is_finded = False
+
+
 def dfs_rec(graph, start, end, visited=[]):
     global is_finded
     if is_finded:
@@ -49,17 +52,24 @@ if __name__ == '__main__':
     |       |     |   |   |
     +-------5     +---+   11
     """
-    graph = { 1: [2, 6, 8],
-              2: [3, 4],
-              3: [],
-              4: [5],
-              5: [1],
-              6: [7],
-              7: [],
-              8: [9, 10],
-              9: [7],
+    graph = {1: [2, 6, 8],
+             2: [3, 4],
+             3: [],
+             4: [5],
+             5: [1],
+             6: [7],
+             7: [],
+             8: [9, 10],
+             9: [7],
              10: [11],
              11: [],
-            }
-    print dfs_rec(graph, 1, 5)
-    print dfs(graph, 1, 5)
+             }
+    print dfs_rec(graph, 1, 1)
+    print dfs_rec(graph, 1, 6)
+    print dfs_rec(graph, 1, 10)
+    print dfs_rec(graph, 1, -1)
+
+    print dfs(graph, 1, 1)
+    print dfs(graph, 1, 6)
+    print dfs(graph, 1, 10)
+    print dfs(graph, 1, -1)
