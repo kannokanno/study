@@ -1,14 +1,15 @@
 class Entry:
-    def __init__(self, name):
+    def __init__(self, name, size):
         self.entries = []
         self.name = name
+        self.size = size
 
     def add(self, entry):
         # do nothing
         pass
 
     def accept(self, visitor):
-        visitor.visit(self)
+        return visitor.visit(self)
 
 class Directory(Entry):
     def add(self, entry):
@@ -23,22 +24,23 @@ class PrintNameVisitor:
         for e in element.entries:
             e.accept(self)
 
-class PrintUpperCaseNameVisitor:
+class CalcTotalSizeVisitor:
     def visit(self, element):
-        print element.name.upper()
+        total = element.size
         for e in element.entries:
-            e.accept(self)
+            total += e.accept(self)
+        return total
 
 if __name__ == '__main__':
-    d1 = Directory('Directory A')
-    d1.add(File('File A'))
-    d1.add(File('File B'))
-    d1.add(File('File C'))
+    d1 = Directory('Directory A', 1000)
+    d1.add(File('File A', 200))
+    d1.add(File('File B', 300))
+    d1.add(File('File C', 500))
 
-    d2 = Directory('Directory B')
-    d2.add(File('File A'))
+    d2 = Directory('Directory B', 2000)
+    d2.add(File('File A', 2000))
     d2.add(d1)
 
     d2.accept(PrintNameVisitor())
     print "--------------"
-    d2.accept(PrintUpperCaseNameVisitor())
+    print "SIZE:" + str(d2.accept(CalcTotalSizeVisitor()))
