@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Entry:
     def __init__(self, name):
         self.name = name
@@ -25,19 +26,35 @@ class File(Entry):
     def accept(self, visitor):
         return visitor.visit_file(self)
 
-class BadNamePrinter:
+# BAD:状態を保持できない(状態変数を引き回すかグローバル変数にしないと)
+class BadNamePrinter1:
     def visit(self, element):
-        print element.name
+        # BAD:もしDevice(Entry)クラスが新規追加された場合に対応できない
+        #     (entriesメソッドの有無 = 型判別ではないので)
         if hasattr(element, 'entries'):
+            print 'Dir => ', element.name
+            for e in element.entries:
+                self.visit(e)
+        else:
+            print 'File => ', element.name
+
+# BAD:状態を保持できない(状態変数を引き回すかグローバル変数にしないと)
+class BadNamePrinter2:
+    def visit(self, element):
+        # BAD:新しいEntryクラスが出来ても対応はできるが、処理が膨れる
+        if isinstance(element, File):
+            print 'File => ', element.name
+        else:
+            print 'Dir => ', element.name
             for e in element.entries:
                 self.visit(e)
 
 class NamePrinter:
     def visit_file(self, element):
-        print element.name
+        print 'File => ', element.name
 
     def visit_dir(self, element):
-        print element.name
+        print 'Dir => ', element.name
         for e in element.entries:
             e.accept(self)
 
@@ -62,6 +79,9 @@ if __name__ == '__main__':
     d1.add(d2)
 
     d1.accept(NamePrinter())
-    BadNamePrinter().visit(d1)
+    print "--------------"
+    BadNamePrinter1().visit(d1)
+    print "--------------"
+    BadNamePrinter2().visit(d1)
     print "--------------"
     print "SIZE:" + str(d1.accept(SizeCalculator()))
