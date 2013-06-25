@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+# なんだかモヤモヤしていたが、http://www.aerith.net/design/Visitor-j.htmlの解説を読むと
+# 以下のコード例は適切ではないと思えてきた。けど一応残しておく
 class Entry:
     def __init__(self, name):
         self.name = name
@@ -28,33 +30,49 @@ class File(Entry):
 
 # BAD:状態を保持できない(状態変数を引き回すかグローバル変数にしないと)
 class BadNamePrinter1:
+    # indentは省略
     def visit(self, element):
         # BAD:もしDevice(Entry)クラスが新規追加された場合に対応できない
         #     (entriesメソッドの有無 = 型判別ではないので)
         if hasattr(element, 'entries'):
-            print 'Dir => ', element.name
+            print element.name
             for e in element.entries:
                 self.visit(e)
         else:
-            print 'File => ', element.name
+            print element.name
 
-# BAD:状態を保持できない(状態変数を引き回すかグローバル変数にしないと)
 class BadNamePrinter2:
+    def __init__(self):
+        self.indent = ''
+        self.before = ''
+
     def visit(self, element):
         # BAD:新しいEntryクラスが出来ても対応はできるが、処理が膨れる
         if isinstance(element, File):
-            print 'File => ', element.name
+            if self.before is 'dir':
+                self.indent += '  '
+            print self.indent + element.name
+            self.before = 'file'
         else:
-            print 'Dir => ', element.name
+            print self.indent + element.name
+            self.before = 'dir'
             for e in element.entries:
                 self.visit(e)
 
 class NamePrinter:
+    def __init__(self):
+        self.indent = ''
+        self.before = ''
+
     def visit_file(self, element):
-        print 'File => ', element.name
+        if self.before is 'dir':
+            self.indent += '  '
+        print self.indent + element.name
+        self.before = 'file'
 
     def visit_dir(self, element):
-        print 'Dir => ', element.name
+        self.before = 'dir'
+        print self.indent + element.name
         for e in element.entries:
             e.accept(self)
 
