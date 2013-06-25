@@ -23,8 +23,7 @@ class Directory(Entry):
             e.show()
 
 class File(Entry):
-    def __init__(self, name):
-        Entry.__init__(self, name)
+    pass
 
 
 if __name__ == '__main__':
