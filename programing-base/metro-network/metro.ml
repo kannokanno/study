@@ -123,3 +123,4 @@ let rec seiretsu ekimei_list = match ekimei_list with
 *)
 (* ------------------------- *)
 
+(* ダイクストラがきちんと理解できていないこともあって、飽きてきた *)
