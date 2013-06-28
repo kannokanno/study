@@ -1,5 +1,6 @@
 #use "ekimei_list.ml"
 #use "ekikan_list.ml"
+#use "eki_t.ml"
 
 (* ------------------------- *)
 let test_mode = true ;;
@@ -8,6 +9,10 @@ let test a b = if test_mode then
     let _assert a b = string_of_bool (a = b) ^ "\n" in
       print_string (_assert a b)
     else ();;
+
+let rec string_of_list lst = match lst with
+    [] -> ""
+  | s :: rest -> s ^ "\n" ^ (string_of_list rest);;
 (* ------------------------- *)
 
 (* ------------------------- *)
@@ -59,3 +64,62 @@ test (kyori_wo_hyoji "shinotsuka" "piyo") "piyoという駅は存在しません
 test (kyori_wo_hyoji "myogadani" "shinotsuka") "茗荷谷駅から新大塚駅までは1.2kmです";;
 test (kyori_wo_hyoji "ikebukuro" "myogadani") "池袋駅と茗荷谷駅はつながっていません";;
 (* ------------------------- *)
+
+(* ------------------------- *)
+(* [ekimei_t] -> [eki_t] *)
+let rec make_eki_list ekimei_list = match ekimei_list with
+    [] -> []
+  | {kanji = k} :: rest -> {namae = k; saitan_kyori = infinity; temae_list = []} :: make_eki_list rest
+;;
+
+let rec show_eki_list lst = match lst with
+    [] -> ""
+  | {namae = n} :: rest -> n ^ "\n" ^ show_eki_list rest
+;;
+(*
+print_string (show_eki_list (make_eki_list global_ekimei_list))
+*)
+let global_eki_list = make_eki_list global_ekimei_list
+(* ------------------------- *)
+
+(* ------------------------- *)
+(* [eki_t] -> String -> [eki_t] *)
+let rec shokika eki_list kiten = match eki_list with
+    [] -> []
+  | ({namae = n; saitan_kyori = s; temae_list = tl} as first) :: rest ->
+      if n = kiten
+      then {namae = n; saitan_kyori = 0.0; temae_list = [n]} :: shokika rest kiten
+      else first :: shokika rest kiten
+;;
+
+(*
+*)
+(* ------------------------- *)
+
+(* ------------------------- *)
+(* [ekimei_t] -> ekimei_t -> [ekimei_t] *)
+(* ekimei_insert : ekimei_t list -> ekimei_t -> ekimei_t list *)
+let rec ekimei_insert lst ekimei0 = match lst with
+    [] -> [ekimei0] 
+  | ({kanji = k; kana = a; romaji = r; shozoku = s} as ekimei) :: rest -> match ekimei0 with
+      {kanji = k0; kana = a0; romaji = r0; shozoku = s0} ->
+        if a = a0
+        then ekimei_insert rest ekimei0
+        else
+          if a < a0
+          then ekimei :: ekimei_insert rest ekimei0
+          else ekimei0 :: lst
+(*
+*)
+(* ------------------------- *)
+
+(* ------------------------- *)
+(* seiretsu : [ekimei_t] -> [ekimei_t] *)
+let rec seiretsu ekimei_list = match ekimei_list with
+    [] -> []
+  | first :: rest -> ekimei_insert (seiretsu rest) first
+
+(*
+*)
+(* ------------------------- *)
+
