@@ -1,5 +1,5 @@
 let s:lines = []
-for s:n in range(3000)
+for s:n in range(10)
   call add(s:lines, "    * 注意:拡張子が`.md`の場合は`markdown`ではなく`modula2`として認識されてしまいます。その場合は以下の設定を.vimrcに記述してください")
 endfor
 
