@@ -1,0 +1,1 @@
+requires 'Web::Scraper' => '0.38';
