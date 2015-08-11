@@ -1,1 +1,2 @@
 requires 'Web::Scraper' => '0.38';
+requires 'LWP::Protocol::https';

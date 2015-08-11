@@ -309,6 +309,22 @@ DISTRIBUTIONS
       Encode 2.10
       Exporter 5.57
       ExtUtils::MakeMaker 6.30
+  IO-Socket-SSL-2.016
+    pathname: S/SU/SULLR/IO-Socket-SSL-2.016.tar.gz
+    provides:
+      IO::Socket::SSL 2.016
+      IO::Socket::SSL::Intercept 2.014
+      IO::Socket::SSL::OCSP_Cache 2.016
+      IO::Socket::SSL::OCSP_Resolver 2.016
+      IO::Socket::SSL::PublicSuffix undef
+      IO::Socket::SSL::SSL_Context 2.016
+      IO::Socket::SSL::SSL_HANDLE 2.016
+      IO::Socket::SSL::Session_Cache 2.016
+      IO::Socket::SSL::Utils 2.014
+    requirements:
+      ExtUtils::MakeMaker 0
+      Net::SSLeay 1.46
+      Scalar::Util 0
   JSON-PP-2.27300
     pathname: M/MA/MAKAMAKA/JSON-PP-2.27300.tar.gz
     provides:
@@ -325,6 +341,18 @@ DISTRIBUTIONS
     requirements:
       ExtUtils::MakeMaker 0
       perl 5.006002
+  LWP-Protocol-https-6.06
+    pathname: M/MS/MSCHILLI/LWP-Protocol-https-6.06.tar.gz
+    provides:
+      LWP::Protocol::https 6.06
+      LWP::Protocol::https::Socket 6.06
+    requirements:
+      ExtUtils::MakeMaker 0
+      IO::Socket::SSL 1.54
+      LWP::UserAgent 6.06
+      Mozilla::CA 20110101
+      Net::HTTPS 6
+      perl 5.008001
   Module-Build-Tiny-0.039
     pathname: L/LE/LEONT/Module-Build-Tiny-0.039.tar.gz
     provides:
@@ -350,6 +378,14 @@ DISTRIBUTIONS
       perl 5.006
       strict 0
       warnings 0
+  Mozilla-CA-20141217
+    pathname: A/AB/ABH/Mozilla-CA-20141217.tar.gz
+    provides:
+      Mozilla::CA 20141217
+    requirements:
+      ExtUtils::MakeMaker 0
+      Test 0
+      perl 5.006
   Net-HTTP-6.09
     pathname: E/ET/ETHER/Net-HTTP-6.09.tar.gz
     provides:
@@ -365,6 +401,16 @@ DISTRIBUTIONS
       IO::Uncompress::Gunzip 0
       URI 0
       perl 5.006002
+  Net-SSLeay-1.70
+    pathname: M/MI/MIKEM/Net-SSLeay-1.70.tar.gz
+    provides:
+      Net::SSLeay 1.70
+      Net::SSLeay::Handle 0.61
+    requirements:
+      ExtUtils::MakeMaker 6.36
+      MIME::Base64 0
+      Test::More 0.60_01
+      perl 5.005
   Parse-CPAN-Meta-1.4417
     pathname: D/DA/DAGOLDEN/Parse-CPAN-Meta-1.4417.tar.gz
     provides:
